@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nexus Agency | Leads Database</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #05050a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: #7e22ce;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    th {
+      background: rgba(126, 34, 206, 0.2);
+      color: #2dd4bf;
+    }
+    td {
+      color: #94a3b8;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .badge {
+      background: #7e22ce;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      background: #3b82f6;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Nexus Lead Database 🗄️</h1>
+      <a href="/" class="btn">Back to Website</a>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Message</th>
+          <th>Date Submitted</th>
+        </tr>
+      </thead>
+      <tbody id="leadsTableBody">
+        <tr><td colspan="6" style="text-align:center;">Loading database...</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    async function loadLeads() {
+      try {
+        const response = await fetch('/api/leads');
+        const leads = await response.json();
+        
+        const tbody = document.getElementById('leadsTableBody');
+        tbody.innerHTML = '';
+        
+        if (leads.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No leads found in database yet. Wait for a lead to arrive!</td></tr>';
+          return;
+        }
+        leads.forEach(lead => {
+          const row = document.createElement('tr');
+          const date = new Date(lead.created_at).toLocaleString();
+          row.innerHTML = `
+            <td><span class="badge">#${lead.id}</span></td>
+            <td><strong>${lead.name}</strong></td>
+            <td><a href="mailto:${lead.email}" style="color: #3b82f6;">${lead.email}</a></td>
+            <td>${lead.company || '-'}</td>
+            <td>${lead.message}</td>
+            <td>${date}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch(err) {
+        document.getElementById('leadsTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center; color: red;">Error loading database.</td></tr>';
+      }
+    }
+    loadLeads();
+  </script>
+</body>
+</html>
