@@ -1,8 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
+
+// Enable CORS for all routes (or restrict to your vercel domain)
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 // Initialize MongoDB Atlas Database
 if (!process.env.MONGO_URI || process.env.MONGO_URI.includes('<YOUR_USERNAME>')) {
