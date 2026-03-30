@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nexus Agency | Leads Database</title>
+  <title>Nexus Agency | Secure Admin Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -10,63 +11,169 @@
       color: #f8fafc;
       margin: 0;
       padding: 2rem;
-    }
-    h1 {
-      color: #7e22ce;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    th {
-      background: rgba(126, 34, 206, 0.2);
-      color: #2dd4bf;
-    }
-    td {
-      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
     .container {
+      width: 100%;
       max-width: 1200px;
-      margin: 0 auto;
     }
-    .badge {
-      background: #7e22ce;
+    
+    /* Login Form Styles */
+    #loginSection {
+      max-width: 400px;
+      margin: 10vh auto;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 2.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    #loginSection h2 {
+      color: #7e22ce;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
       color: white;
-      padding: 0.2rem 0.5rem;
-      border-radius: 5px;
-      font-size: 0.8rem;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(135deg, #7e22ce, #3b82f6);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.2s;
+    }
+    .btn-login:hover {
+      opacity: 0.9;
+    }
+    #loginError {
+      color: #ef4444;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* Dashboard Styles */
+    #dashboardSection {
+      display: none;
+      width: 100%;
     }
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2rem;
+    }
+    .header h1 {
+      color: #7e22ce;
+      margin: 0;
     }
     .btn {
-      background: #3b82f6;
+      background: rgba(255, 255, 255, 0.1);
       color: white;
       text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
       font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    th, td {
+      padding: 1rem 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    th {
+      background: rgba(126, 34, 206, 0.15);
+      color: #3b82f6;
+      font-weight: 600;
+    }
+    td {
+      color: #e2e8f0;
+    }
+    .badge {
+      background: rgba(126, 34, 206, 0.4);
+      color: #f8fafc;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    a.email-link {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    a.email-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- Login Section -->
+  <div id="loginSection">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">Secure Access</button>
+      <div id="loginError">Invalid credentials. Please try again.</div>
+    </form>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div class="container" id="dashboardSection">
     <div class="header">
-      <h1>Nexus Lead Database 🗄️</h1>
-      <a href="/" class="btn">Back to Website</a>
+      <h1>Nexus Leads 🗄️</h1>
+      <div>
+        <button class="btn" style="border:none; cursor:pointer;" onclick="logout()">Logout</button>
+        <a href="/" class="btn" style="margin-left:10px;">Back to Site</a>
+      </div>
     </div>
     <table>
       <thead>
@@ -84,37 +191,105 @@
       </tbody>
     </table>
   </div>
+
   <script>
-    async function loadLeads() {
+    const API_URL = 'https://nexus-backend-dgqw.onrender.com';
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      const loginBtn = document.getElementById('loginBtn');
+      const errorMsg = document.getElementById('loginError');
+      
+      loginBtn.textContent = 'Authenticating...';
+      loginBtn.disabled = true;
+      errorMsg.style.display = 'none';
+
+      // Create Basic Auth Token
+      const token = btoa(`${user}:${pass}`);
+
       try {
-        const response = await fetch('/api/leads');
-        const leads = await response.json();
-        
-        const tbody = document.getElementById('leadsTableBody');
-        tbody.innerHTML = '';
-        
-        if (leads.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No leads found in database yet. Wait for a lead to arrive!</td></tr>';
-          return;
-        }
-        leads.forEach(lead => {
-          const row = document.createElement('tr');
-          const date = new Date(lead.created_at).toLocaleString();
-          row.innerHTML = `
-            <td><span class="badge">#${lead.id}</span></td>
-            <td><strong>${lead.name}</strong></td>
-            <td><a href="mailto:${lead.email}" style="color: #3b82f6;">${lead.email}</a></td>
-            <td>${lead.company || '-'}</td>
-            <td>${lead.message}</td>
-            <td>${date}</td>
-          `;
-          tbody.appendChild(row);
+        const response = await fetch(`${API_URL}/api/leads`, {
+          headers: {
+            'Authorization': `Basic ${token}`
+          }
         });
-      } catch(err) {
-        document.getElementById('leadsTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center; color: red;">Error loading database.</td></tr>';
+
+        if (response.ok) {
+          const leads = await response.json();
+          // Save token to session storage for this session
+          sessionStorage.setItem('nexusAdminToken', token);
+          showDashboard(leads);
+        } else {
+          throw new Error('Unauthorized');
+        }
+      } catch (err) {
+        errorMsg.style.display = 'block';
+      } finally {
+        loginBtn.textContent = 'Secure Access';
+        loginBtn.disabled = false;
       }
+    });
+
+    function showDashboard(leads) {
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('dashboardSection').style.display = 'block';
+      renderLeads(leads);
     }
-    loadLeads();
+
+    function renderLeads(leads) {
+      const tbody = document.getElementById('leadsTableBody');
+      tbody.innerHTML = '';
+      
+      if (leads.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 3rem;">No leads found. Start running some ads!</td></tr>';
+        return;
+      }
+
+      leads.forEach(lead => {
+        const row = document.createElement('tr');
+        const date = new Date(lead.created_at).toLocaleString();
+        row.innerHTML = `
+          <td><span class="badge">#${lead.id.substring(0, 6)}</span></td>
+          <td><strong>${lead.name}</strong></td>
+          <td><a href="mailto:${lead.email}" class="email-link">${lead.email}</a></td>
+          <td>${lead.company || '-'}</td>
+          <td>${lead.message}</td>
+          <td>${date}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function logout() {
+      sessionStorage.removeItem('nexusAdminToken');
+      document.getElementById('loginSection').style.display = 'block';
+      document.getElementById('dashboardSection').style.display = 'none';
+      document.getElementById('loginForm').reset();
+    }
+
+    // Auto-login if token exists in session
+    window.addEventListener('DOMContentLoaded', async () => {
+      const savedToken = sessionStorage.getItem('nexusAdminToken');
+      if (savedToken) {
+        document.getElementById('loginSection').style.display = 'none';
+        try {
+          const response = await fetch(`${API_URL}/api/leads`, {
+            headers: { 'Authorization': `Basic ${savedToken}` }
+          });
+          if (response.ok) {
+            const leads = await response.json();
+            showDashboard(leads);
+          } else {
+            logout();
+          }
+        } catch (e) {
+          logout();
+        }
+      }
+    });
   </script>
 </body>
 </html>
